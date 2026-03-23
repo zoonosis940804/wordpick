@@ -420,13 +420,8 @@ const statusText = document.getElementById("statusText");
 const historyCount = document.getElementById("historyCount");
 const swipeHint = document.getElementById("swipeHint");
 const resultsTrack = document.getElementById("resultsTrack");
-const resultsViewport = document.getElementById("resultsViewport");
 const emptyState = document.getElementById("emptyState");
 const quickTopicButtons = document.querySelectorAll(".topic-chip");
-
-let dragged = false;
-let dragStartX = 0;
-let startScrollLeft = 0;
 
 function normalizeTopic(value) {
   return value.trim().toLowerCase().replace(/\s+/g, "");
@@ -558,11 +553,15 @@ function createResultCard(topic, count, words, matchedTopic, fallback, numbered)
   return card;
 }
 
+function getResultCards() {
+  return Array.from(resultsTrack.querySelectorAll(".result-card"));
+}
+
 function updateBoardState() {
-  const cardCount = resultsTrack.querySelectorAll(".result-card").length;
+  const cardCount = getResultCards().length;
   historyCount.textContent = `${cardCount}개 주제`;
   emptyState.hidden = cardCount > 0;
-  swipeHint.hidden = cardCount < 2;
+  swipeHint.hidden = cardCount < 5;
 }
 
 function drawTopicWords(topic, count, numbered) {
@@ -570,7 +569,7 @@ function drawTopicWords(topic, count, numbered) {
   const card = createResultCard(topic, count, words, matchedTopic, fallback, numbered);
   resultsTrack.appendChild(card);
   updateBoardState();
-  card.scrollIntoView({ behavior: "smooth", inline: "end", block: "nearest" });
+  card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
   statusText.textContent = numbered
     ? `"${topic}" 주제로 단어 ${count}개를 번호순으로 뽑았어요.`
     : `"${topic}" 주제로 단어 ${count}개를 뽑았어요.`;
@@ -625,42 +624,6 @@ function handleQuickTopicClick(button) {
   topicInput.focus();
 }
 
-function setupDesktopDragScroll() {
-  resultsViewport.addEventListener("pointerdown", (event) => {
-    if (event.pointerType !== "mouse") {
-      return;
-    }
-    dragged = true;
-    dragStartX = event.clientX;
-    startScrollLeft = resultsViewport.scrollLeft;
-    resultsViewport.classList.add("is-dragging");
-    resultsViewport.setPointerCapture(event.pointerId);
-  });
-
-  resultsViewport.addEventListener("pointermove", (event) => {
-    if (!dragged) {
-      return;
-    }
-    const moved = dragStartX - event.clientX;
-    resultsViewport.scrollLeft = startScrollLeft + moved;
-  });
-
-  function stopDragging(event) {
-    if (!dragged) {
-      return;
-    }
-    dragged = false;
-    resultsViewport.classList.remove("is-dragging");
-    if (event.pointerId !== undefined && resultsViewport.hasPointerCapture(event.pointerId)) {
-      resultsViewport.releasePointerCapture(event.pointerId);
-    }
-  }
-
-  resultsViewport.addEventListener("pointerup", stopDragging);
-  resultsViewport.addEventListener("pointercancel", stopDragging);
-  resultsViewport.addEventListener("pointerleave", stopDragging);
-}
-
 form.addEventListener("submit", handleSubmit);
 clearAllBtn.addEventListener("click", clearAllCards);
 
@@ -678,5 +641,4 @@ quickTopicButtons.forEach((button) => {
   button.addEventListener("click", () => handleQuickTopicClick(button));
 });
 
-setupDesktopDragScroll();
 updateBoardState();

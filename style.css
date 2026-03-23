@@ -33,7 +33,7 @@ body {
   color: var(--text-main);
   background: linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
   line-height: 1.5;
-  font-size: 18px;
+  font-size: 20px;
   position: relative;
   overflow-x: hidden;
   padding: 24px;
@@ -103,17 +103,17 @@ body {
 
 h1 {
   margin: 5px 0 8px;
-  font-size: clamp(2.15rem, 3.2vw, 2.9rem);
+  font-size: clamp(2.45rem, 3.8vw, 3.3rem);
 }
 
 h2 {
   margin: 0 0 12px;
-  font-size: 1.7rem;
+  font-size: 1.95rem;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 1.22rem;
+  font-size: 1.36rem;
   color: var(--text-sub);
 }
 
@@ -124,16 +124,16 @@ h2 {
 }
 
 .draw-form label {
-  font-size: 1.08rem;
+  font-size: 1.22rem;
 }
 
 .draw-form input[type="text"],
 .draw-form input[type="number"] {
   border: 2px solid var(--line-soft);
   border-radius: var(--radius-md);
-  padding: 13px 16px;
+  padding: 14px 17px;
   font-family: "Gaegu", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
 }
@@ -165,7 +165,7 @@ h2 {
 }
 
 .option-toggle span {
-  font-size: 1.05rem;
+  font-size: 1.17rem;
   color: #5e4b3d;
 }
 
@@ -179,9 +179,9 @@ h2 {
 .btn {
   border: none;
   border-radius: 999px;
-  padding: 13px 20px;
+  padding: 14px 21px;
   font-family: "Jua", sans-serif;
-  font-size: 1.16rem;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: transform 0.14s ease, filter 0.14s ease;
 }
@@ -218,7 +218,7 @@ h2 {
   background: #fff9f1;
   color: #79563f;
   cursor: pointer;
-  font-size: 1.04rem;
+  font-size: 1.18rem;
   font-family: "Jua", sans-serif;
 }
 
@@ -229,7 +229,7 @@ h2 {
 .status-text {
   margin: 14px 0 0;
   font-family: "Gaegu", sans-serif;
-  font-size: 1.33rem;
+  font-size: 1.52rem;
   color: #66574a;
 }
 
@@ -249,35 +249,48 @@ h2 {
   background: #fff6d3;
   border: 2px solid #ffe8a0;
   border-radius: 999px;
-  font-size: 1.04rem;
+  font-size: 1.17rem;
 }
 
 .swipe-hint {
   margin: 8px 0 12px;
-  font-size: 1.08rem;
+  font-size: 1.2rem;
   color: #65564a;
 }
 
 .results-viewport {
-  overflow-x: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: min(72vh, 760px);
   border-radius: var(--radius-lg);
   background: linear-gradient(165deg, #fffaf3 0%, #f8fcff 100%);
   border: 2px solid #f7ead7;
   padding: 16px;
   scrollbar-width: thin;
+  scrollbar-color: #f2be8c #fff3e2;
   scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  cursor: grab;
 }
 
-.results-viewport.is-dragging {
-  cursor: grabbing;
+.results-viewport::-webkit-scrollbar {
+  width: 12px;
+}
+
+.results-viewport::-webkit-scrollbar-track {
+  background: #fff3e2;
+  border-radius: 999px;
+}
+
+.results-viewport::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #ffc695, #ffb17f);
+  border-radius: 999px;
+  border: 2px solid #fff3e2;
 }
 
 .results-track {
-  display: flex;
-  gap: 12px;
-  min-height: 255px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-height: 180px;
 }
 
 .empty-state {
@@ -291,26 +304,31 @@ h2 {
 
 .empty-state h3 {
   margin: 0 0 6px;
-  font-size: 1.35rem;
+  font-size: 1.56rem;
 }
 
 .empty-state p {
   margin: 0;
   font-family: "Gaegu", sans-serif;
-  font-size: 1.24rem;
+  font-size: 1.38rem;
 }
 
 .result-card {
-  flex: 0 0 min(90vw, 390px);
   background: #fff;
   border-radius: 24px;
   border: 2px solid #f7e2cc;
   box-shadow: 0 10px 18px rgba(89, 65, 43, 0.08);
-  padding: 18px;
+  padding: 16px;
   display: grid;
-  gap: 12px;
-  scroll-snap-align: start;
+  gap: 10px;
   transform-origin: center;
+  transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.result-card.is-active {
+  border-color: #ffbb84;
+  box-shadow: 0 14px 24px rgba(173, 109, 60, 0.2);
+  transform: translateY(-2px);
 }
 
 .result-card.pop-in {
@@ -326,7 +344,7 @@ h2 {
 
 .card-topic {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: 1.66rem;
 }
 
 .card-badge {
@@ -337,7 +355,7 @@ h2 {
   border-radius: 999px;
   border: 2px solid #f3e4cf;
   background: #fff8ec;
-  font-size: 1rem;
+  font-size: 1.14rem;
   color: #6c5644;
 }
 
@@ -345,7 +363,7 @@ h2 {
   margin: 0;
   font-family: "Gaegu", sans-serif;
   color: #7c6754;
-  font-size: 1.2rem;
+  font-size: 1.34rem;
 }
 
 .word-list {
@@ -373,7 +391,7 @@ h2 {
   border-radius: 14px;
   padding: 8px 12px;
   color: #5f462f;
-  font-size: 1.08rem;
+  font-size: 1.2rem;
 }
 
 .word-chip {
@@ -384,9 +402,9 @@ h2 {
   border: 2px solid #bfe8d7;
   border-radius: 999px;
   padding: 8px 14px;
-  font-size: 1.08rem;
+  font-size: 1.22rem;
   color: #355849;
-  min-height: 42px;
+  min-height: 44px;
 }
 
 .card-actions {
@@ -402,7 +420,7 @@ h2 {
   border: 2px solid #bddcf6;
   color: #35506a;
   font-family: "Jua", sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.16rem;
   cursor: pointer;
 }
 
@@ -442,6 +460,12 @@ h2 {
   }
 
   .results-track {
-    min-height: 285px;
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 620px) {
+  .results-track {
+    grid-template-columns: 1fr;
   }
 }
