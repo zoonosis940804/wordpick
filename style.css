@@ -128,7 +128,8 @@ h2 {
 }
 
 .draw-form input[type="text"],
-.draw-form input[type="number"] {
+.draw-form input[type="number"],
+.draw-form select {
   border: 2px solid var(--line-soft);
   border-radius: var(--radius-md);
   padding: 14px 17px;
@@ -139,9 +140,15 @@ h2 {
 }
 
 .draw-form input[type="text"]:focus,
-.draw-form input[type="number"]:focus {
+.draw-form input[type="number"]:focus,
+.draw-form select:focus {
   border-color: #ffba86;
   box-shadow: 0 0 0 4px rgba(255, 186, 134, 0.25);
+}
+
+.draw-form select {
+  background: #fffdf9;
+  color: #4b382a;
 }
 
 .option-toggle {

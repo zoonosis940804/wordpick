@@ -21,8 +21,8 @@
       <header class="hero-card">
         <h1>주제별 단어 뽑기</h1>
         <p class="subtitle">
-          주제를 입력하고 원하는 개수를 고르면, 그 주제에 맞는 단어가 뽑혀요.
-          여러 주제를 뽑아도 지워지지 않고 옆으로 넘겨서 볼 수 있어요.
+          주제를 직접 입력하지 않고, 미리 준비된 주제에서만 선택해요.
+          각 주제에는 하위어 100개 이상이 들어 있어요.
         </p>
       </header>
 
@@ -30,16 +30,8 @@
         <h2 id="controlTitle">단어 뽑기 설정</h2>
 
         <form id="drawForm" class="draw-form">
-          <label for="topicInput">주제</label>
-          <input
-            id="topicInput"
-            name="topic"
-            type="text"
-            placeholder="예: 동물, 우주, 음식"
-            maxlength="24"
-            autocomplete="off"
-            required
-          />
+          <label for="topicSelect">주제</label>
+          <select id="topicSelect" name="topic" required></select>
 
           <label for="countInput">단어 개수</label>
           <input
@@ -63,17 +55,10 @@
           </div>
         </form>
 
-        <div class="quick-topics" aria-label="빠른 주제 선택">
-          <button type="button" class="topic-chip" data-topic="동물">동물</button>
-          <button type="button" class="topic-chip" data-topic="과일">과일</button>
-          <button type="button" class="topic-chip" data-topic="공룡">공룡</button>
-          <button type="button" class="topic-chip" data-topic="우주">우주</button>
-          <button type="button" class="topic-chip" data-topic="직업">직업</button>
-          <button type="button" class="topic-chip" data-topic="운동">운동</button>
-        </div>
+        <div class="quick-topics" id="quickTopics" aria-label="빠른 주제 선택"></div>
 
         <p id="statusText" class="status-text" aria-live="polite">
-          첫 주제를 입력하고 단어를 뽑아보세요.
+          주제를 고르고 단어를 뽑아보세요.
         </p>
       </section>
 
